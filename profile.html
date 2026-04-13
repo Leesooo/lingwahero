@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile · Lingwahero</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .profile-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .profile-header {
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      border-radius: 24px;
+      padding: 48px;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, var(--yellow), #ffe484);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .profile-avatar i {
+      font-size: 48px;
+      color: var(--blue-dark);
+    }
+
+    .profile-header h1 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .profile-header p {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .profile-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--red);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-gray);
+      margin-top: 8px;
+    }
+
+    .profile-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .profile-section h3 {
+      font-size: 18px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+    }
+
+    .profile-list {
+      list-style: none;
+    }
+
+    .profile-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text);
+    }
+
+    .profile-list li:last-child {
+      border-bottom: none;
+    }
+
+    .profile-list li:hover {
+      color: var(--blue);
+    }
+
+    .profile-list li i {
+      color: var(--text-gray);
+    }
+
+    .btn-logout {
+      width: 100%;
+      background: var(--red);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: all 0.2s;
+    }
+
+    .btn-logout:hover {
+      background: var(--red-dark);
+      transform: translateY(-2px);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px;
+      color: var(--text-gray);
+    }
+
+    @media (max-width: 768px) {
+      .profile-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== UNIFIED NAVBAR ========== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <div class="brand-sun">☀</div>
+      <img src="lingwahero_l.jpg" alt="Lingwahero" class="brand-logo" id="brandLogo" style="height: 32px; width: auto;">
+      <span class="brand-text">Lingwahero</span>
+    </a>
+    <div class="nav-center">
+      <a href="index.html" class="nav-link">Tahanan</a>
+      <a href="games.html" class="nav-link">Laro <span class="badge-new">NEW</span></a>
+      <a href="scanner.html" class="nav-link scanner-icon">📷</a>
+      <a href="about.html" class="nav-link">Tungkol sa Amin</a>
+    </div>
+    <div class="nav-right">
+      <a href="profile.html" class="icon-btn" title="Profile">
+        <i class="fas fa-user"></i>
+      </a>
+      <button class="icon-btn" id="darkModeToggle" title="Dark Mode">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+    <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Tahanan</a>
+    <a href="games.html">Laro 🎮</a>
+    <a href="scanner.html">Scanner 📷</a>
+    <a href="about.html">Tungkol sa Amin</a>
+    <a href="profile.html">Profile</a>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="main-content" style="margin-left: 0; padding: 32px;">
+  <div class="profile-container">
+    <div class="profile-header">
+      <div class="profile-avatar">
+        <i class="fas fa-user-circle"></i>
+      </div>
+      <h1 id="userName">Loading...</h1>
+      <p id="userEmail">loading@email.com</p>
+    </div>
+
+    <div class="profile-stats">
+      <div class="stat-card">
+        <div class="stat-number" id="statFavorites">0</div>
+        <div class="stat-label">Paboritong Salita</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statSearches">0</div>
+        <div class="stat-label">Mga Hinanap</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statGames">0</div>
+        <div class="stat-label">Laro Nalaro</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statScore">0</div>
+        <div class="stat-label">Kabuuang Puntos</div>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <h3><i class="fas fa-heart"></i> Mga Paboritong Salita</h3>
+      <div id="favoritesList" class="profile-list">
+        <div class="empty-state">Walang paboritong salita</div>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <h3><i class="fas fa-history"></i> Kamakailang Hinanap</h3>
+      <div id="recentList" class="profile-list">
+        <div class="empty-state">Walang kamakailang hinanap</div>
+      </div>
+    </div>
+
+    <button class="btn-logout" id="logoutBtn">
+      <i class="fas fa-sign-out-alt"></i> Mag-logout
+    </button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="brand-sun">☀</div>
+      <span>Lingwahero</span>
+      <p>Diksiyonaryong Makabayan</p>
+    </div>
+    <div class="footer-nav">
+      <h4>Mga Pahina</h4>
+      <a href="index.html">Tahanan</a>
+      <a href="games.html">Mga Laro</a>
+      <a href="scanner.html">Scanner</a>
+      <a href="about.html">Tungkol sa Amin</a>
+    </div>
+    <div class="footer-nav">
+      <h4>Mga Laro</h4>
+      <a href="games.html?game=language">Language Quiz</a>
+      <a href="games.html?game=baybayin">Baybayin Quiz</a>
+      <a href="games.html?game=wordguess">Hulaan ang Salita</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Makipag-ugnayan</h4>
+      <p><i class="fab fa-facebook"></i> @Lingwahero</p>
+      <p><i class="fab fa-github"></i> /lingwahero</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>🇵🇭 © 2026 Lingwahero | Grupo · Pagpapanatili ng Wikang Filipino</p>
+    <p class="footer-quote">"Ang wika ay salamin ng kultura at kaluluwa ng bayan."</p>
+  </div>
+</footer>
+
+<script>
+  // Get user data from localStorage
+  function getUser() {
+    return JSON.parse(localStorage.getItem('lingwahero_currentUser'));
+  }
+
+  function getFavorites() {
+    return JSON.parse(localStorage.getItem('pd_favorites') || '[]');
+  }
+
+  function getRecentSearches() {
+    return JSON.parse(localStorage.getItem('pd_recent') || '[]');
+  }
+
+  function getUserStats() {
+    return JSON.parse(localStorage.getItem('lingwahero_stats') || '{"totalScore":0,"gamesPlayed":0}');
+  }
+
+  function updateProfile() {
+    const user = getUser();
+    if (!user) {
+      window.location.href = 'login-signup.html';
+      return;
+    }
+
+    document.getElementById('userName').textContent = user.name;
+    document.getElementById('userEmail').textContent = user.email;
+
+    const favorites = getFavorites();
+    document.getElementById('statFavorites').textContent = favorites.length;
+
+    const searches = getRecentSearches();
+    document.getElementById('statSearches').textContent = searches.length;
+
+    const stats = getUserStats();
+    document.getElementById('statGames').textContent = stats.gamesPlayed;
+    document.getElementById('statScore').textContent = stats.totalScore;
+
+    // Render favorites list
+    const favContainer = document.getElementById('favoritesList');
+    if (favorites.length === 0) {
+      favContainer.innerHTML = '<div class="empty-state">Walang paboritong salita</div>';
+    } else {
+      favContainer.innerHTML = favorites.map(word => `
+        <li onclick="searchWord('${word}')">
+          <span>${word}</span>
+          <i class="fas fa-chevron-right"></i>
+        </li>
+      `).join('');
+    }
+
+    // Render recent searches list
+    const recentContainer = document.getElementById('recentList');
+    if (searches.length === 0) {
+      recentContainer.innerHTML = '<div class="empty-state">Walang kamakailang hinanap</div>';
+    } else {
+      recentContainer.innerHTML = searches.map(word => `
+        <li onclick="searchWord('${word}')">
+          <span>${word}</span>
+          <i class="fas fa-chevron-right"></i>
+        </li>
+      `).join('');
+    }
+  }
+
+  function searchWord(word) {
+    window.location.href = `index.html?search=${encodeURIComponent(word)}`;
+  }
+
+  function logout() {
+    localStorage.removeItem('lingwahero_currentUser');
+    window.location.href = 'login-signup.html';
+  }
+
+  document.getElementById('logoutBtn').addEventListener('click', logout);
+
+  // Dark mode
+  const darkToggle = document.getElementById('darkModeToggle');
+  function initDarkMode() {
+    if (localStorage.getItem('darkMode') === 'enabled') {
+      document.body.classList.add('dark-mode');
+      darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+  }
+  darkToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+    darkToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+  });
+  initDarkMode();
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  }
+
+  updateProfile();
+</script>
+</body>
+</html>

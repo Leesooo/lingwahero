@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scanner · Lingwahero</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ========== UNIFIED NAVBAR ========== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="Lingwahero.jpg" alt="Lingwahero Logo" class="brand-logo" id="brandLogo">
+      <!-- Add your logo here -->
+      <span class="brand-text">Lingwahero</span>
+    </a>
+    <div class="nav-center">
+      <a href="index.html" class="nav-link">Tahanan</a>
+      <a href="games.html" class="nav-link">Laro <span class="badge-new">NEW</span></a>
+      <a href="about.html" class="nav-link">Tungkol sa Amin</a>
+    </div>
+    <div class="nav-right">
+      <a href="scanner.html" class="scanner-icon-btn active" title="Scanner">
+        <i class="fas fa-camera"></i>
+      </a>
+      <button class="icon-btn" id="favBtn" title="Mga Paborito">
+        <i class="fas fa-heart"></i>
+        <span class="fav-count" id="favCount">0</span>
+      </button>
+      <button class="btn-login" id="openLoginBtn">
+        <i class="fas fa-user"></i> Mag-login
+      </button>
+      <button class="icon-btn" id="darkModeToggle" title="Dark Mode">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+    <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Tahanan</a>
+    <a href="games.html">Laro 🎮</a>
+    <a href="scanner.html"><i class="fas fa-camera"></i> Scanner</a>
+    <a href="about.html">Tungkol sa Amin</a>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="main-content" style="margin-left: 0; padding: 32px;">
+  <div class="scanner-container">
+    <div class="scanner-hero">
+      <h1></i> Lingwahero Scanner</h1>
+      <p>I-scan o i-type ang teksto sa alinmang wikang Filipino at i-translate sa iyong gustong wika</p>
+      <div class="supported-langs">
+        <span class="lang-badge"><i class="fas fa-check"></i> Tagalog</span>
+        <span class="lang-badge"><i class="fas fa-check"></i> Cebuano</span>
+        <span class="lang-badge"><i class="fas fa-check"></i> Ilocano</span>
+        <span class="lang-badge"><i class="fas fa-check"></i> Hiligaynon</span>
+        <span class="lang-badge"><i class="fas fa-check"></i> English</span>
+      </div>
+    </div>
+
+    <div class="scanner-card">
+      <div class="scan-methods">
+        <button class="method-btn active" id="textMethodBtn"><i class="fas fa-keyboard"></i> I-type ang Teksto</button>
+        <button class="method-btn" id="scanMethodBtn"><i class="fas fa-camera"></i> I-scan ang Imahe</button>
+      </div>
+
+      <!-- Text Input Method -->
+      <div id="textMethod" class="scan-area">
+        <div class="text-input-area">
+          <textarea id="sourceText" placeholder="Ilagay ang teksto dito... Halimbawa: 'Magandang umaga sa inyong lahat!'"></textarea>
+        </div>
+      </div>
+
+      <!-- Scan Image Method -->
+      <div id="scanMethod" class="scan-area" style="display: none;">
+        <div class="upload-area" id="uploadArea">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <p>I-click o i-drag ang imahe dito</p>
+          <p style="font-size: 12px; margin-top: 8px;">Sinusuportahan ang JPG, PNG - Malinaw na larawan ng teksto</p>
+          <input type="file" id="imageInput" accept="image/*" style="display: none;">
+        </div>
+        <div id="imagePreview" style="margin-top: 20px; display: none;">
+          <img id="previewImg" style="max-width: 100%; border-radius: var(--radius);">
+        </div>
+        <div id="ocrStatus" style="margin-top: 12px; font-size: 13px; color: var(--text-gray); text-align: center;"></div>
+      </div>
+
+      <!-- Language Selector -->
+      <div class="language-selector">
+        <select id="sourceLang" class="lang-select">
+          <option value="tl">Tagalog</option>
+          <option value="ceb">Cebuano</option>
+          <option value="ilo">Ilocano</option>
+          <option value="hil">Hiligaynon</option>
+          <option value="en" selected>English</option>
+        </select>
+        <i class="fas fa-arrow-right" style="align-self: center; color: var(--text-gray);"></i>
+        <select id="targetLang" class="lang-select">
+          <option value="tl">Tagalog</option>
+          <option value="ceb">Cebuano</option>
+          <option value="ilo">Ilocano</option>
+          <option value="hil">Hiligaynon</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+
+      <button class="translate-btn" id="translateBtn">
+        <i class="fas fa-language"></i> Isalin / Translate
+      </button>
+
+      <!-- Result Area -->
+      <div id="resultContainer" style="display: none;">
+        <div class="result-area">
+          <div class="result-label"><i class="fas fa-copy"></i> Resulta / Result</div>
+          <div id="translatedText" class="result-text"></div>
+          <button class="copy-btn" id="copyBtn"><i class="fas fa-copy"></i> Kopyahin / Copy</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="brand-sun">☀</div>
+      <span>Lingwahero</span>
+      <p>Diksiyonaryong Makabayan</p>
+    </div>
+    <div class="footer-nav">
+      <h4>Mga Pahina</h4>
+      <a href="index.html">Tahanan</a>
+      <a href="games.html">Mga Laro</a>
+      <a href="scanner.html">Scanner</a>
+      <a href="about.html">Tungkol sa Amin</a>
+    </div>
+    <div class="footer-nav">
+      <h4>Mga Laro</h4>
+      <a href="games.html?game=language">Language Quiz</a>
+      <a href="games.html?game=baybayin">Baybayin Quiz</a>
+      <a href="games.html?game=wordguess">Hulaan ang Salita</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Makipag-ugnayan</h4>
+      <p><i class="fab fa-facebook"></i> @Lingwahero</p>
+      <p><i class="fab fa-github"></i> /lingwahero</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>🇵🇭 © 2026 Lingwahero | Pagpapanatili ng Wikang Filipino</p>
+    <p class="footer-quote">"Ang wika ay salamin ng kultura at kaluluwa ng bayan."</p>
+  </div>
+</footer>
+
+<script>
+  // ========== EXPANDED TRANSLATION DATABASE ==========
+  const translations = {
+    // Tagalog to English
+    "magandang umaga": "good morning",
+    "magandang tanghali": "good noon",
+    "magandang hapon": "good afternoon",
+    "magandang gabi": "good evening",
+    "kumusta": "hello",
+    "kumusta ka": "how are you",
+    "salamat": "thank you",
+    "paalam": "goodbye",
+    "oo": "yes",
+    "hindi": "no",
+    "mahal kita": "i love you",
+    "pangalan": "name",
+    "tao": "person",
+    "lugar": "place",
+    "bagay": "thing",
+    "araw": "day / sun",
+    "gabi": "night",
+    "tubig": "water",
+    "pagkain": "food",
+    "bahay": "house",
+    "tahanan": "home",
+    "kaibigan": "friend",
+    "pamilya": "family",
+    "trabaho": "work",
+    "paaralan": "school",
+    "doktor": "doctor",
+    "guro": "teacher",
+    "ina": "mother",
+    "ama": "father",
+    "kapatid": "sibling",
+    "lola": "grandmother",
+    "lolo": "grandfather",
+    "aso": "dog",
+    "pusa": "cat",
+    "ibon": "bird",
+    "isda": "fish",
+    "bulaklak": "flower",
+    "puno": "tree",
+    "bundok": "mountain",
+    "dagat": "sea",
+    "langit": "sky",
+    "lupa": "earth",
+    "apoy": "fire",
+    "hangin": "wind",
+    "buhay": "life",
+    "pag-ibig": "love",
+    "maganda": "beautiful",
+    "gwapo": "handsome",
+    "malaki": "big",
+    "maliit": "small",
+    "mainit": "hot",
+    "malamig": "cold",
+    "bago": "new",
+    "luma": "old",
+    "mabilis": "fast",
+    "mabagal": "slow",
+    
+    // English to Tagalog
+    "good morning": "magandang umaga",
+    "good noon": "magandang tanghali",
+    "good afternoon": "magandang hapon",
+    "good evening": "magandang gabi",
+    "hello": "kumusta",
+    "how are you": "kumusta ka",
+    "thank you": "salamat",
+    "goodbye": "paalam",
+    "yes": "oo",
+    "no": "hindi",
+    "i love you": "mahal kita",
+    "name": "pangalan",
+    "person": "tao",
+    "place": "lugar",
+    "thing": "bagay",
+    "day": "araw",
+    "sun": "araw",
+    "night": "gabi",
+    "water": "tubig",
+    "food": "pagkain",
+    "house": "bahay",
+    "home": "tahanan",
+    "friend": "kaibigan",
+    "family": "pamilya",
+    "work": "trabaho",
+    "school": "paaralan",
+    "doctor": "doktor",
+    "teacher": "guro",
+    "mother": "ina",
+    "father": "ama",
+    "sibling": "kapatid",
+    "grandmother": "lola",
+    "grandfather": "lolo",
+    "dog": "aso",
+    "cat": "pusa",
+    "bird": "ibon",
+    "fish": "isda",
+    "flower": "bulaklak",
+    "tree": "puno",
+    "mountain": "bundok",
+    "sea": "dagat",
+    "sky": "langit",
+    "earth": "lupa",
+    "fire": "apoy",
+    "wind": "hangin",
+    "life": "buhay",
+    "love": "pag-ibig",
+    "beautiful": "maganda",
+    "handsome": "gwapo",
+    "big": "malaki",
+    "small": "maliit",
+    "hot": "mainit",
+    "cold": "malamig",
+    "new": "bago",
+    "old": "luma",
+    "fast": "mabilis",
+    "slow": "mabagal",
+    
+    // Cebuano to English
+    "maayong buntag": "good morning",
+    "maayong udto": "good noon",
+    "maayong hapon": "good afternoon",
+    "maayong gabii": "good evening",
+    "salamat": "thank you",
+    "palihug": "please",
+    "oo": "yes",
+    "dili": "no",
+    "gihigugma tika": "i love you",
+    "adlaw": "day / sun",
+    "gabii": "night",
+    "tubig": "water",
+    "pagkaon": "food",
+    "balay": "house",
+    "amigo": "friend",
+    
+    // English to Cebuano
+    "good morning": "maayong buntag",
+    "good noon": "maayong udto",
+    "good afternoon": "maayong hapon",
+    "good evening": "maayong gabii",
+    "thank you": "salamat",
+    "please": "palihug",
+    "yes": "oo",
+    "no": "dili",
+    "i love you": "gihigugma tika",
+    "day": "adlaw",
+    "sun": "adlaw",
+    "night": "gabii",
+    "water": "tubig",
+    "food": "pagkaon",
+    "house": "balay",
+    "friend": "amigo",
+    
+    // Ilocano to English
+    "naimbag a bigat": "good morning",
+    "naimbag a aldaw": "good day",
+    "naimbag a malem": "good afternoon",
+    "naimbag a rabii": "good evening",
+    "agyamanak": "thank you",
+    "wen": "yes",
+    "saan": "no",
+    "ay-ayaten ka": "i love you",
+    "aldaw": "day / sun",
+    "rabii": "night",
+    "danum": "water",
+    "makanon": "food",
+    "balay": "house",
+    
+    // English to Ilocano
+    "good morning": "naimbag a bigat",
+    "good day": "naimbag a aldaw",
+    "good afternoon": "naimbag a malem",
+    "good evening": "naimbag a rabii",
+    "thank you": "agyamanak",
+    "yes": "wen",
+    "no": "saan",
+    "i love you": "ay-ayaten ka",
+    "day": "aldaw",
+    "sun": "aldaw",
+    "night": "rabii",
+    "water": "danum",
+    "food": "makanon",
+    "house": "balay",
+    
+    // Hiligaynon to English
+    "maayong aga": "good morning",
+    "maayong udto": "good noon",
+    "maayong hapon": "good afternoon",
+    "maayong gab-i": "good evening",
+    "salamat": "thank you",
+    "palihug": "please",
+    "huo": "yes",
+    "indi": "no",
+    "ginahigugma ko ikaw": "i love you",
+    "adlaw": "day / sun",
+    "gab-i": "night",
+    "tubig": "water",
+    "pagkaon": "food",
+    "balay": "house",
+    
+    // English to Hiligaynon
+    "good morning": "maayong aga",
+    "good noon": "maayong udto",
+    "good afternoon": "maayong hapon",
+    "good evening": "maayong gab-i",
+    "thank you": "salamat",
+    "please": "palihug",
+    "yes": "huo",
+    "no": "indi",
+    "i love you": "ginahigugma ko ikaw",
+    "day": "adlaw",
+    "sun": "adlaw",
+    "night": "gab-i",
+    "water": "tubig",
+    "food": "pagkaon",
+    "house": "balay"
+  };
+
+  const langNames = {
+    "tl": "Tagalog",
+    "ceb": "Cebuano",
+    "ilo": "Ilocano",
+    "hil": "Hiligaynon",
+    "en": "English"
+  };
+
+  function translateText(text, sourceLang, targetLang) {
+    if (sourceLang === targetLang) return text;
+    
+    const lowerText = text.toLowerCase().trim();
+    
+    if (translations[lowerText]) return translations[lowerText];
+    
+    const words = lowerText.split(/\s+/);
+    const translatedWords = [];
+    
+    for (const word of words) {
+      if (translations[word]) {
+        translatedWords.push(translations[word]);
+      } else {
+        translatedWords.push(word);
+      }
+    }
+    
+    let result = translatedWords.join(' ');
+    if (result.length > 0) {
+      result = result.charAt(0).toUpperCase() + result.slice(1);
+    }
+    
+    if (result === lowerText) {
+      return `⚠️ Hindi pa maisalin ang "${text}" mula ${langNames[sourceLang]} papuntang ${langNames[targetLang]}.`;
+    }
+    
+    return result;
+  }
+
+  // OCR Space API Configuration
+  // Note: For production, you should use your own API key from https://ocr.space/OCRAPI
+  // This is a free tier that works for demo purposes
+  const OCR_API_KEY = "helloworld"; // Free tier - limited usage
+  const OCR_API_URL = "https://api.ocr.space/parse/image";
+
+  async function performOCR(imageFile) {
+    const ocrStatus = document.getElementById('ocrStatus');
+    ocrStatus.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kinukuha ang teksto mula sa imahe...';
+    
+    try {
+      const formData = new FormData();
+      formData.append('file', imageFile);
+      formData.append('language', 'eng'); // English + Filipino support
+      formData.append('OCREngine', '2'); // More accurate engine
+      
+      const response = await fetch(OCR_API_URL, {
+        method: 'POST',
+        headers: {
+          'apikey': OCR_API_KEY
+        },
+        body: formData
+      });
+      
+      const result = await response.json();
+      
+      if (result.IsErroredOnProcessing) {
+        throw new Error(result.ErrorMessage || 'OCR failed');
+      }
+      
+      if (result.ParsedResults && result.ParsedResults.length > 0) {
+        const extractedText = result.ParsedResults[0].ParsedText;
+        if (extractedText && extractedText.trim()) {
+          ocrStatus.innerHTML = '<i class="fas fa-check-circle"></i> Matagumpay na nabasa ang imahe!';
+          return extractedText.trim();
+        } else {
+          ocrStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Walang nakitang teksto sa imahe.';
+          return null;
+        }
+      } else {
+        ocrStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Walang nakitang teksto. Subukan ang mas malinaw na larawan.';
+        return null;
+      }
+    } catch (error) {
+      console.error('OCR Error:', error);
+      ocrStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i> Error sa OCR. Gamitin ang text input sa halip.';
+      return null;
+    }
+  }
+
+  // DOM Elements
+  const textMethodBtn = document.getElementById('textMethodBtn');
+  const scanMethodBtn = document.getElementById('scanMethodBtn');
+  const textMethod = document.getElementById('textMethod');
+  const scanMethod = document.getElementById('scanMethod');
+  const sourceText = document.getElementById('sourceText');
+  const sourceLang = document.getElementById('sourceLang');
+  const targetLang = document.getElementById('targetLang');
+  const translateBtn = document.getElementById('translateBtn');
+  const resultContainer = document.getElementById('resultContainer');
+  const translatedText = document.getElementById('translatedText');
+  const copyBtn = document.getElementById('copyBtn');
+  const uploadArea = document.getElementById('uploadArea');
+  const imageInput = document.getElementById('imageInput');
+  const imagePreview = document.getElementById('imagePreview');
+  const previewImg = document.getElementById('previewImg');
+
+  let currentImageFile = null;
+
+  textMethodBtn.addEventListener('click', () => {
+    textMethodBtn.classList.add('active');
+    scanMethodBtn.classList.remove('active');
+    textMethod.style.display = 'block';
+    scanMethod.style.display = 'none';
+  });
+
+  scanMethodBtn.addEventListener('click', () => {
+    scanMethodBtn.classList.add('active');
+    textMethodBtn.classList.remove('active');
+    scanMethod.style.display = 'block';
+    textMethod.style.display = 'none';
+  });
+
+  uploadArea.addEventListener('click', () => imageInput.click());
+
+  uploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadArea.style.borderColor = 'var(--blue)';
+  });
+
+  uploadArea.addEventListener('dragleave', () => {
+    uploadArea.style.borderColor = 'var(--border)';
+  });
+
+  uploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) handleImage(file);
+  });
+
+  imageInput.addEventListener('change', (e) => {
+    if (e.target.files[0]) handleImage(e.target.files[0]);
+  });
+
+  function handleImage(file) {
+    currentImageFile = file;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      previewImg.src = e.target.result;
+      imagePreview.style.display = 'block';
+      uploadArea.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  translateBtn.addEventListener('click', async () => {
+    let textToTranslate = '';
+    
+    if (textMethodBtn.classList.contains('active')) {
+      textToTranslate = sourceText.value.trim();
+      if (!textToTranslate) {
+        alert('Pakilagay ang teksto na nais isalin.');
+        return;
+      }
+    } else {
+      if (!currentImageFile) {
+        alert('Pakipili ng imahe na i-scan.');
+        return;
+      }
+      
+      translateBtn.disabled = true;
+      translateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sine-scan ang imahe...';
+      
+      textToTranslate = await performOCR(currentImageFile);
+      
+      translateBtn.innerHTML = '<i class="fas fa-language"></i> Isalin / Translate';
+      translateBtn.disabled = false;
+      
+      if (!textToTranslate) return;
+      sourceText.value = textToTranslate;
+    }
+    
+    if (textToTranslate) {
+      const source = sourceLang.value;
+      const target = targetLang.value;
+      const result = translateText(textToTranslate, source, target);
+      
+      translatedText.innerHTML = result;
+      resultContainer.style.display = 'block';
+    }
+  });
+
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(translatedText.innerText);
+    copyBtn.innerHTML = '<i class="fas fa-check"></i> Nakopya na!';
+    setTimeout(() => {
+      copyBtn.innerHTML = '<i class="fas fa-copy"></i> Kopyahin / Copy';
+    }, 2000);
+  });
+
+  // Dark mode
+  const darkToggle = document.getElementById('darkModeToggle');
+  function initDarkMode() {
+    if (localStorage.getItem('darkMode') === 'enabled') {
+      document.body.classList.add('dark-mode');
+      darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+  }
+  darkToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+    darkToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+  });
+  initDarkMode();
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  }
+</script>
+</body>
+</html>
