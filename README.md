@@ -1,0 +1,2 @@
+# lingwahero
+Diksiyonaryong Makabayan
