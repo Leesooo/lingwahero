@@ -8,19 +8,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'DM Sans', system-ui, sans-serif;
       background: linear-gradient(135deg, #0038A8 0%, #002272 50%, #9a0d1b 100%);
       min-height: 100vh;
-      overflow-x: hidden;
     }
-
     .bg-animation {
       position: fixed;
       top: 0;
@@ -30,7 +23,6 @@
       overflow: hidden;
       z-index: 0;
     }
-
     .bg-animation span {
       position: absolute;
       display: block;
@@ -39,24 +31,12 @@
       animation: float 20s infinite linear;
       pointer-events: none;
     }
-
     @keyframes float {
-      0% {
-        transform: translateY(100vh) rotate(0deg);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.5;
-      }
-      90% {
-        opacity: 0.5;
-      }
-      100% {
-        transform: translateY(-100vh) rotate(360deg);
-        opacity: 0;
-      }
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.5; }
+      90% { opacity: 0.5; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
     }
-
     .landing-container {
       position: relative;
       z-index: 1;
@@ -66,7 +46,6 @@
       justify-content: center;
       padding: 20px;
     }
-
     .landing-card {
       max-width: 480px;
       width: 100%;
@@ -76,18 +55,10 @@
       box-shadow: 0 32px 64px rgba(0, 0, 0, 0.3);
       animation: slideUp 0.6s ease;
     }
-
     @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-
     .card-hero {
       background: linear-gradient(135deg, #CE1126 0%, #0038A8 100%);
       padding: 48px 32px;
@@ -95,7 +66,6 @@
       position: relative;
       overflow: hidden;
     }
-
     .card-hero::before {
       content: "★";
       position: absolute;
@@ -106,7 +76,6 @@
       color: #FCD116;
       pointer-events: none;
     }
-
     .hero-icon {
       font-size: 64px;
       color: #FCD116;
@@ -114,11 +83,9 @@
       display: inline-block;
       animation: spin 8s linear infinite;
     }
-
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
-
     .card-hero h1 {
       font-family: 'Playfair Display', Georgia, serif;
       font-size: 32px;
@@ -126,12 +93,10 @@
       color: white;
       margin-bottom: 8px;
     }
-
     .card-hero p {
       font-size: 14px;
       color: rgba(255, 255, 255, 0.8);
     }
-
     .flag-strip {
       width: 80px;
       height: 4px;
@@ -139,13 +104,11 @@
       margin: 16px auto 0;
       border-radius: 2px;
     }
-
     .auth-tabs {
       display: flex;
       border-bottom: 1px solid #e8d8c8;
       background: white;
     }
-
     .tab-btn {
       flex: 1;
       padding: 18px;
@@ -158,11 +121,9 @@
       transition: all 0.2s;
       position: relative;
     }
-
     .tab-btn.active {
       color: #CE1126;
     }
-
     .tab-btn.active::after {
       content: '';
       position: absolute;
@@ -172,35 +133,23 @@
       height: 3px;
       background: #CE1126;
     }
-
     .form-container {
       padding: 32px;
     }
-
     .form {
       display: none;
     }
-
     .form.active {
       display: block;
       animation: fadeIn 0.4s ease;
     }
-
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-
     .form-group {
       margin-bottom: 20px;
     }
-
     .form-group label {
       display: block;
       font-size: 13px;
@@ -208,7 +157,6 @@
       color: #4a3728;
       margin-bottom: 8px;
     }
-
     .input-wrapper {
       display: flex;
       align-items: center;
@@ -218,17 +166,14 @@
       padding: 0 16px;
       transition: all 0.2s;
     }
-
     .input-wrapper:focus-within {
       border-color: #0038A8;
       box-shadow: 0 0 0 3px rgba(0, 56, 168, 0.1);
     }
-
     .input-wrapper i {
       color: #8a7060;
       font-size: 14px;
     }
-
     .input-wrapper input {
       flex: 1;
       border: none;
@@ -239,18 +184,12 @@
       outline: none;
       color: #1a1206;
     }
-
-    .input-wrapper input::placeholder {
-      color: #b8a898;
-    }
-
     .error-message {
       font-size: 12px;
       color: #CE1126;
       margin-top: 6px;
       min-height: 18px;
     }
-
     .btn-submit {
       width: 100%;
       background: linear-gradient(135deg, #CE1126, #9a0d1b);
@@ -264,12 +203,10 @@
       transition: all 0.2s;
       margin-top: 8px;
     }
-
     .btn-submit:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(206, 17, 38, 0.3);
     }
-
     .demo-note {
       background: #FFF8F0;
       border-left: 4px solid #FCD116;
@@ -279,33 +216,27 @@
       font-size: 12px;
       color: #4a3728;
     }
-
     .demo-note i {
       color: #FCD116;
       margin-right: 8px;
     }
-
     .switch-text {
       text-align: center;
       font-size: 13px;
       color: #8a7060;
       margin-top: 20px;
     }
-
     .switch-text a {
       color: #0038A8;
       font-weight: 600;
       cursor: pointer;
-      text-decoration: none;
     }
-
     .guest-mode {
       text-align: center;
       padding: 16px 32px 24px;
       background: white;
       border-top: 1px solid #e8d8c8;
     }
-
     .guest-btn {
       background: transparent;
       border: 2px solid #e8d8c8;
@@ -315,71 +246,18 @@
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
       width: 100%;
     }
-
     .guest-btn:hover {
       border-color: #0038A8;
       color: #0038A8;
     }
-
-    body.dark-mode .landing-card {
-      background: rgba(26, 20, 9, 0.98);
-    }
-
-    body.dark-mode .auth-tabs {
-      background: #1a1409;
-      border-color: #2a2015;
-    }
-
-    body.dark-mode .tab-btn {
-      color: #7a6a55;
-    }
-
-    body.dark-mode .tab-btn.active {
-      color: #FCD116;
-    }
-
-    body.dark-mode .form-container {
-      background: #1a1409;
-    }
-
-    body.dark-mode .form-group label {
-      color: #c8b89a;
-    }
-
-    body.dark-mode .input-wrapper {
-      background: #231b0f;
-      border-color: #2a2015;
-    }
-
-    body.dark-mode .input-wrapper input {
-      color: #f0e8dc;
-    }
-
-    body.dark-mode .demo-note {
-      background: #231b0f;
-      color: #c8b89a;
-    }
-
-    body.dark-mode .guest-mode {
-      background: #1a1409;
-      border-color: #2a2015;
-    }
-
-    body.dark-mode .guest-btn {
-      border-color: #2a2015;
-      color: #c8b89a;
-    }
-
     .dark-toggle {
       position: fixed;
       top: 20px;
       right: 20px;
       z-index: 10;
     }
-
     .dark-toggle-btn {
       background: rgba(255, 255, 255, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.3);
@@ -389,24 +267,11 @@
       border-radius: 50%;
       cursor: pointer;
       backdrop-filter: blur(10px);
-      transition: all 0.2s;
     }
-
-    .dark-toggle-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: scale(1.05);
-    }
-
     @media (max-width: 480px) {
-      .card-hero {
-        padding: 32px 24px;
-      }
-      .card-hero h1 {
-        font-size: 24px;
-      }
-      .form-container {
-        padding: 24px;
-      }
+      .card-hero { padding: 32px 24px; }
+      .card-hero h1 { font-size: 24px; }
+      .form-container { padding: 24px; }
     }
   </style>
 </head>
@@ -504,7 +369,7 @@
 <script src="firebase-config.js"></script>
 
 <script>
-  // Generate floating bubbles
+  // Generate bubbles
   function generateBubbles() {
     const container = document.getElementById('bgAnimation');
     for (let i = 0; i < 30; i++) {
@@ -563,7 +428,7 @@
   if (switchToSignup) switchToSignup.addEventListener('click', showSignup);
   if (switchToLogin) switchToLogin.addEventListener('click', showLogin);
 
-  // Firebase Auth - Sign Up
+  // ========== FIREBASE AUTH - SIGN UP ==========
   window.doSignup = async function() {
     const name = document.getElementById('signupName').value.trim();
     const email = document.getElementById('signupEmail').value.trim();
@@ -580,9 +445,11 @@
     }
 
     try {
+      // Create user in Firebase Authentication
       const userCredential = await auth.createUserWithEmailAndPassword(email, password);
       const user = userCredential.user;
       
+      // Save user data to Firestore
       await db.collection('users').doc(user.uid).set({
         name: name,
         email: email,
@@ -590,7 +457,10 @@
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
       
+      // Save to localStorage for quick access
       localStorage.setItem('lingwahero_currentUser', JSON.stringify({ name, email, uid: user.uid }));
+      
+      errorEl.textContent = '';
       window.location.href = 'index.html';
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
@@ -601,7 +471,7 @@
     }
   };
 
-  // Firebase Auth - Sign In
+  // ========== FIREBASE AUTH - SIGN IN ==========
   window.doLogin = async function() {
     const email = document.getElementById('loginEmail').value.trim();
     const password = document.getElementById('loginPassword').value;
@@ -616,6 +486,7 @@
       const userCredential = await auth.signInWithEmailAndPassword(email, password);
       const user = userCredential.user;
       
+      // Get user data from Firestore
       const userDoc = await db.collection('users').doc(user.uid).get();
       const userData = userDoc.data();
       
@@ -625,6 +496,7 @@
         uid: user.uid 
       }));
       
+      errorEl.textContent = '';
       window.location.href = 'index.html';
     } catch (error) {
       errorEl.textContent = 'Mali ang email o password.';
@@ -637,6 +509,7 @@
     window.location.href = 'index.html';
   };
 
+  // Event listeners
   document.getElementById('loginSubmitBtn').onclick = () => window.doLogin();
   document.getElementById('signupSubmitBtn').onclick = () => window.doSignup();
   document.getElementById('guestBtn').onclick = () => window.guestMode();
