@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mga Laro · Lingwahero</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ========== UNIFIED NAVBAR ========== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="Lingwahero.jpg" alt="Lingwahero Logo" class="brand-logo" id="brandLogo">
+      <!-- Add your logo here -->
+      <span class="brand-text">Lingwahero</span>
+    </a>
+<div class="nav-center">
+  <a href="index.html" class="nav-link active" data-page="home">Tahanan</a>
+  <a href="games.html" class="nav-link" data-page="games">Laro <span class="badge-new">NEW</span></a>
+  <a href="about.html" class="nav-link" data-page="about">Tungkol sa Amin</a>
+</div>
+<div class="nav-right">
+  <a href="scanner.html" class="scanner-icon-btn" title="Scanner">
+    <i class="fas fa-camera"></i>
+  </a>
+  <button class="icon-btn" id="darkModeToggle" title="Dark Mode">
+    <i class="fas fa-moon"></i>
+  </button>
+  <button class="icon-btn" id="favBtn" title="Mga Paborito">
+    <i class="fas fa-heart"></i>
+    <span class="fav-count" id="favCount">0</span>
+  </button>
+  <button class="btn-login" id="openLoginBtn">
+    <i class="fas fa-user"></i> Mag-login
+  </button>
+</div>
+    <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+  </div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Tahanan</a>
+  <a href="#" onclick="showAllWords(); return false;">Lahat ng Salita</a>
+  <a href="games.html">Laro 🎮</a>
+  <a href="about.html">Tungkol sa Amin</a>
+  <a href="scanner.html"><i class="fas fa-camera"></i> Scanner</a>
+  <a href="#" onclick="openLogin(); return false;">Mag-login</a>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="games-hero">
+  <div class="games-hero-bg"></div>
+  <div class="container">
+    <div class="games-hero-content">
+      <div class="hero-eyebrow">🎮 Mga Laro</div>
+      <h1>Maglaro at <span class="hero-accent">Matuto</span></h1>
+      <p>Subukan ang iyong kaalaman sa wikang Filipino sa pamamagitan ng masayang mga laro</p>
+    </div>
+  </div>
+</section>
+
+<!-- GAME SELECTOR -->
+<section class="game-selector-section">
+  <div class="container">
+    <div class="game-cards-row">
+      <div class="game-sel-card" id="card-language" onclick="loadGame('language')">
+        <div class="gsc-emoji">🧠</div>
+        <h3>Language Quiz</h3>
+        <p>Subukan ang iyong kaalaman sa Tagalog, Cebuano, at Ilocano</p>
+        <div class="gsc-meta"><span>8 Tanong</span> <span>Madali–Mahirap</span></div>
+        <div class="gsc-play">Maglaro <i class="fas fa-arrow-right"></i></div>
+      </div>
+      <div class="game-sel-card featured" id="card-baybayin" onclick="loadGame('baybayin')">
+        <div class="gsc-featured-badge">Espesyal</div>
+        <div class="gsc-emoji baybayin-emoji">ᜊᜌ᜔</div>
+        <h3>Alamin ang Baybayin</h3>
+        <p>Kilalanin ang sinaunang sulat ng mga Pilipino bago pa dumating ang mga Kastila</p>
+        <div class="gsc-meta"><span>9 Tanong</span> <span>Kasaysayan</span></div>
+        <div class="gsc-play">Maglaro <i class="fas fa-arrow-right"></i></div>
+      </div>
+      <div class="game-sel-card" id="card-wordguess" onclick="loadGame('wordguess')">
+        <div class="gsc-emoji">🔤</div>
+        <h3>Hulaan ang Salita</h3>
+        <p>Base sa kahulugan, hulaan kung aling salita ang tinutukoy</p>
+        <div class="gsc-meta"><span>10 Tanong</span> <span>Bagong Laro</span></div>
+        <div class="gsc-play">Maglaro <i class="fas fa-arrow-right"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GAME AREA -->
+<section class="game-area-section">
+  <div class="container">
+    <div id="gameArea" class="game-area" style="display:none;">
+      <div class="game-area-head">
+        <button class="back-btn" onclick="closeGame()"><i class="fas fa-chevron-left"></i> Bumalik</button>
+        <div class="game-title-area">
+          <h2 id="gameTitle">—</h2>
+          <div class="game-progress-bar"><div id="gameProgressFill" class="game-progress-fill"></div></div>
+        </div>
+        <div class="game-score-display">
+          <i class="fas fa-star"></i> <span id="gameScore">0</span>
+        </div>
+      </div>
+      <div id="gameContent" class="game-content"></div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERBOARD / RECENT SCORES -->
+<section class="scores-section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Pinakamataas na Puntos</h2>
+      <p>Iyong personal na rekord</p>
+    </div>
+    <div class="scores-grid" id="scoresGrid">
+      <div class="score-row">
+        <span class="score-game">Language Quiz</span>
+        <div class="score-bar-wrap"><div class="score-bar" id="bar-language"></div></div>
+        <span class="score-val" id="score-language">—</span>
+      </div>
+      <div class="score-row">
+        <span class="score-game">Baybayin Quiz</span>
+        <div class="score-bar-wrap"><div class="score-bar" id="bar-baybayin"></div></div>
+        <span class="score-val" id="score-baybayin">—</span>
+      </div>
+      <div class="score-row">
+        <span class="score-game">Hulaan ang Salita</span>
+        <div class="score-bar-wrap"><div class="score-bar" id="bar-wordguess"></div></div>
+        <span class="score-val" id="score-wordguess">—</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="brand-sun">☀</div>
+      <span>Lingwahero</span>
+      <p>Diksiyonaryong Makabayan</p>
+    </div>
+    <div class="footer-nav">
+      <h4>Mga Pahina</h4>
+      <a href="index.html">Tahanan</a>
+      <a href="games.html">Mga Laro</a>
+      <a href="about.html">Tungkol sa Amin</a>
+    </div>
+    <div class="footer-nav">
+      <h4>Mga Laro</h4>
+      <a href="#" onclick="loadGame('language')">Language Quiz</a>
+      <a href="#" onclick="loadGame('baybayin')">Baybayin Quiz</a>
+      <a href="#" onclick="loadGame('wordguess')">Hulaan ang Salita</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Makipag-ugnayan</h4>
+      <p><i class="fab fa-facebook"></i> @Lingwahero</p>
+      <p><i class="fab fa-github"></i> /lingwahero</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p> © 2026 Lingwahero |Pagpapanatili ng Wikang Filipino</p>
+  </div>
+</footer>
+
+<script src="games.js"></script>
+
+</body>
+</html>

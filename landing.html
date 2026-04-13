@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lingwahero · Diksiyonaryong Makabayan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: #FFF9F2;
+      overflow-x: hidden;
+    }
+
+    body.dark-mode {
+      background: #0d0a06;
+    }
+
+    /* Smooth Scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 20px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 249, 242, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      transition: all 0.3s;
+    }
+
+    body.dark-mode .navbar {
+      background: rgba(13, 10, 6, 0.95);
+      border-bottom-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .navbar.scrolled {
+      padding: 12px 48px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo .sun {
+      font-size: 28px;
+      color: #FCD116;
+      animation: spin 8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .logo span {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #CE1126;
+    }
+
+    body.dark-mode .logo span {
+      color: #FCD116;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #4a3728;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    body.dark-mode .nav-links a {
+      color: #c8b89a;
+    }
+
+    .nav-links a:hover {
+      color: #CE1126;
+    }
+
+    .btn-nav {
+      background: #CE1126;
+      color: white !important;
+      padding: 10px 24px;
+      border-radius: 40px;
+      transition: all 0.2s;
+    }
+
+    .btn-nav:hover {
+      background: #9a0d1b;
+      transform: translateY(-2px);
+    }
+
+    .dark-toggle {
+      background: none;
+      border: 1px solid #e8d8c8;
+      padding: 8px 12px;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 48px 80px;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 600px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(206, 17, 38, 0.1);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      color: #CE1126;
+      margin-bottom: 24px;
+    }
+
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 64px;
+      font-weight: 900;
+      line-height: 1.1;
+      color: #1a1206;
+      margin-bottom: 24px;
+    }
+
+    body.dark-mode .hero-content h1 {
+      color: #f0e8dc;
+    }
+
+    .hero-content h1 span {
+      color: #CE1126;
+      border-bottom: 3px solid #FCD116;
+    }
+
+    .hero-description {
+      font-size: 18px;
+      color: #4a3728;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    body.dark-mode .hero-description {
+      color: #c8b89a;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+    }
+
+    .btn-primary {
+      background: #CE1126;
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 40px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: #9a0d1b;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #CE1126;
+      color: #CE1126;
+      padding: 12px 30px;
+      border-radius: 40px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    /* Sticky Features Section */
+    .sticky-features {
+      position: relative;
+    }
+
+    .feature-sticky {
+      position: sticky;
+      top: 80px;
+      background: #FFF3E4;
+      padding: 80px 48px;
+      margin-bottom: 20px;
+      border-radius: 32px;
+      overflow: hidden;
+    }
+
+    body.dark-mode .feature-sticky {
+      background: #130f08;
+    }
+
+    .feature-sticky:nth-child(even) {
+      background: #FFEFDF;
+    }
+
+    body.dark-mode .feature-sticky:nth-child(even) {
+      background: #1a1409;
+    }
+
+    .feature-container {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-content {
+      flex: 1;
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: all 0.8s ease;
+    }
+
+    .feature-content.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .feature-image {
+      flex: 1;
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.8s ease 0.2s;
+    }
+
+    .feature-image.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .feature-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 80px;
+      font-weight: 900;
+      color: rgba(206, 17, 38, 0.15);
+      margin-bottom: 16px;
+    }
+
+    .feature-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      margin-bottom: 16px;
+      color: #1a1206;
+    }
+
+    body.dark-mode .feature-content h2 {
+      color: #f0e8dc;
+    }
+
+    .feature-content p {
+      font-size: 16px;
+      color: #4a3728;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    body.dark-mode .feature-content p {
+      color: #c8b89a;
+    }
+
+    .feature-icon-box {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #CE1126, #0038A8);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .feature-icon-box i {
+      font-size: 40px;
+      color: white;
+    }
+
+    /* Stats Row */
+    .stats-row {
+      display: flex;
+      justify-content: space-around;
+      padding: 80px 48px;
+      background: white;
+      margin: 40px 0;
+      border-radius: 32px;
+    }
+
+    body.dark-mode .stats-row {
+      background: #1a1409;
+    }
+
+    .stat-item {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .stat-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 900;
+      color: #CE1126;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: #8a7060;
+      margin-top: 8px;
+    }
+
+    /* Testimonial Section */
+    .testimonial-section {
+      padding: 80px 48px;
+      text-align: center;
+    }
+
+    .testimonial-card {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 48px;
+      background: white;
+      border-radius: 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+      opacity: 0;
+      transform: scale(0.95);
+      transition: all 0.6s ease;
+    }
+
+    body.dark-mode .testimonial-card {
+      background: #1a1409;
+    }
+
+    .testimonial-card.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .testimonial-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-style: italic;
+      color: #1a1206;
+      margin-bottom: 24px;
+    }
+
+    body.dark-mode .testimonial-quote {
+      color: #f0e8dc;
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+      color: #CE1126;
+    }
+
+    /* Team Section */
+    .team-section {
+      padding: 80px 48px;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .team-card {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .team-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .team-avatar {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #CE1126, #0038A8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .team-avatar i {
+      font-size: 48px;
+      color: white;
+    }
+
+    .team-card h4 {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .team-role {
+      font-size: 13px;
+      color: #8a7060;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, #0038A8, #CE1126);
+      padding: 80px 48px;
+      text-align: center;
+      border-radius: 32px;
+      margin: 40px 0;
+    }
+
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      color: white;
+      margin-bottom: 16px;
+    }
+
+    .cta-section p {
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 32px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .btn-white {
+      background: white;
+      color: #CE1126;
+      padding: 14px 32px;
+      border-radius: 40px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-transparent {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px;
+      border-top: 1px solid #e8d8c8;
+      color: #8a7060;
+      font-size: 13px;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-up {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 16px 24px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero-section {
+        padding: 100px 24px 60px;
+      }
+
+      .hero-content h1 {
+        font-size: 40px;
+      }
+
+      .feature-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .feature-content,
+      .feature-image {
+        transform: translateX(0);
+      }
+
+      .stats-row {
+        flex-direction: column;
+        gap: 32px;
+        padding: 48px 24px;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+
+      .cta-section h2 {
+        font-size: 32px;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="logo">
+    <div class="sun">☀</div>
+    <span>Lingwahero</span>
+  </div>
+  <div class="nav-links">
+    <a href="#hero">Tahanan</a>
+    <a href="#features">Mga Tampok</a>
+    <a href="#team">Ang Pangkat</a>
+    <a href="#cta" class="btn-nav">Magsimula</a>
+  </div>
+  <button class="dark-toggle" id="darkModeToggle"><i class="fas fa-moon"></i></button>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section" id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Diksiyonaryong Makabayan</div>
+    <h1>Ang <span>wikang Filipino</span> sa iyong mga kamay</h1>
+    <p class="hero-description">
+      Alamin ang kahulugan ng mga salita sa limang wikang Pilipino: Tagalog, Cebuano, Ilocano, Hiligaynon, at English. 
+      Maglaro ng mga larong pangwika at palawakin ang iyong bokabularyo.
+    </p>
+<div class="hero-buttons">
+  <a href="login-signup.html" class="btn-primary">Magsimula</a>
+</div>
+  </div>
+  <div class="hero-image" style="flex: 1;">
+  <div class="floating-animation">
+    <img src="isata.jpg" alt="Lingwahero" style="width: 100%; border-radius: 32px;">
+  </div>
+</div>
+</section>
+
+<!-- Sticky Features Section -->
+<div class="sticky-features" id="features">
+  <div class="feature-sticky">
+    <div class="feature-container">
+      <div class="feature-content" id="feature1">
+        <div class="feature-icon-box"><i class="fas fa-search"></i></div>
+        <div class="feature-number">01</div>
+        <h2>Paghahanap ng Salita</h2>
+        <p>Mabilis na maghanap ng kahulugan ng salita sa limang magkakaibang wikang Pilipino. May kasama pang Text-to-Speech para marinig ang tamang pagbigkas.</p>
+        <div class="hero-features" style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <span style="background: rgba(206,17,38,0.1); padding: 4px 12px; border-radius: 20px; font-size: 12px;">Tagalog</span>
+          <span style="background: rgba(206,17,38,0.1); padding: 4px 12px; border-radius: 20px; font-size: 12px;">Cebuano</span>
+          <span style="background: rgba(206,17,38,0.1); padding: 4px 12px; border-radius: 20px; font-size: 12px;">Ilocano</span>
+          <span style="background: rgba(206,17,38,0.1); padding: 4px 12px; border-radius: 20px; font-size: 12px;">Hiligaynon</span>
+          <span style="background: rgba(206,17,38,0.1); padding: 4px 12px; border-radius: 20px; font-size: 12px;">English</span>
+        </div>
+      </div>
+      <div class="feature-image" id="feature1Img">
+        <div style="background: linear-gradient(135deg, #CE1126, #0038A8); border-radius: 24px; padding: 40px; text-align: center;">
+          <i class="fas fa-search" style="font-size: 80px; color: white;"></i>
+          <p style="color: white; margin-top: 20px;">Maghanap ng kahulugan sa limang wika</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feature-sticky">
+    <div class="feature-container">
+      <div class="feature-content" id="feature2">
+        <div class="feature-icon-box"><i class="fas fa-gamepad"></i></div>
+        <div class="feature-number">02</div>
+        <h2>Mga Larong Pangwika</h2>
+        <p>Subukan ang iyong kaalaman sa tatlong masayang laro: Language Quiz, Baybayin Quiz, at Hulaan ang Salita. Matuto habang nag-eenjoy!</p>
+        <div class="hero-features" style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <span style="background: rgba(206,17,38,0.1); padding: 4px 12px; border-radius: 20px; font-size: 12px;">🧠 Language Quiz</span>
+          <span style="background: rgba(206,17,38,0.1); padding: 4px 12px; border-radius: 20px; font-size: 12px;">📜 Baybayin Quiz</span>
+          <span style="background: rgba(206,17,38,0.1); padding: 4px 12px; border-radius: 20px; font-size: 12px;">🔤 Hulaan ang Salita</span>
+        </div>
+      </div>
+      <div class="feature-image" id="feature2Img">
+        <div style="background: linear-gradient(135deg, #FCD116, #CE1126); border-radius: 24px; padding: 40px; text-align: center;">
+          <i class="fas fa-gamepad" style="font-size: 80px; color: white;"></i>
+          <p style="color: white; margin-top: 20px;">Tatlong laro para sa masayang pag-aaral</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feature-sticky">
+    <div class="feature-container">
+      <div class="feature-content" id="feature3">
+        <div class="feature-icon-box"><i class="fas fa-heart"></i></div>
+        <div class="feature-number">03</div>
+        <h2>Mga Paborito at Salita ng Araw</h2>
+        <p>I-save ang mga salitang gusto mong balikan. Araw-araw may bagong salita na matututunan upang mapalawak ang iyong bokabularyo.</p>
+      </div>
+      <div class="feature-image" id="feature3Img">
+        <div style="background: linear-gradient(135deg, #0038A8, #CE1126); border-radius: 24px; padding: 40px; text-align: center;">
+          <i class="fas fa-star" style="font-size: 80px; color: #FCD116;"></i>
+          <p style="color: white; margin-top: 20px;">Salita ng Araw · Mga Paborito</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Stats Row -->
+<div class="stats-row">
+  <div class="stat-item" id="stat1">
+    <div class="stat-number">20+</div>
+    <div class="stat-label">Mga Salita</div>
+  </div>
+  <div class="stat-item" id="stat2">
+    <div class="stat-number">5</div>
+    <div class="stat-label">Wikang Suportado</div>
+  </div>
+  <div class="stat-item" id="stat3">
+    <div class="stat-number">3</div>
+    <div class="stat-label">Mga Laro</div>
+  </div>
+  <div class="stat-item" id="stat4">
+    <div class="stat-number">100%</div>
+    <div class="stat-label">Libre</div>
+  </div>
+</div>
+
+<!-- Testimonial Section -->
+<div class="testimonial-section">
+  <div class="testimonial-card" id="testimonial">
+    <div class="testimonial-quote">
+      "Ang hindi magmahal sa sariling wika ay higit pa sa hayop at malansang isda."
+    </div>
+    <div class="testimonial-author">— Dr. José P. Rizal</div>
+    <div style="margin-top: 16px; font-size: 14px; color: #8a7060;">Pambansang Bayani ng Pilipinas</div>
+  </div>
+</div>
+
+<!-- Team Section -->
+<div class="team-section" id="team">
+  <h2 style="font-family: 'Playfair Display', serif; font-size: 48px; text-align: center; margin-bottom: 16px;">Team Lingwahero</h2>
+  <p style="text-align: center; color: #8a7060; margin-bottom: 48px;">Ang mga taong nasa likod ng Lingwahero</p>
+  <div class="team-grid" style="display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; max-width: 900px; margin: 0 auto;">
+    
+    <!-- Member 1 - Renz Andrei Lim -->
+    <div class="team-card" id="team1" style="flex: 1; min-width: 200px; max-width: 250px;">
+      <div class="team-avatar">
+        <img src="renz.jpg" alt="Renz Andrei Lim" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+      </div>
+      <h4>Renz Andrei Lim</h4>
+      <div class="team-role">Lead Developer</div>
+    </div>
+    
+    <!-- Member 2 - Nelo Castillo -->
+    <div class="team-card" id="team2" style="flex: 1; min-width: 200px; max-width: 250px;">
+      <div class="team-avatar">
+        <img src="nelo.jpg" alt="Nelo Castillo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+      </div>
+      <h4>Nelo Castillo</h4>
+      <div class="team-role">Content Researcher</div>
+    </div>
+    
+    <!-- Member 3 - Denmark Clacio -->
+    <div class="team-card" id="team3" style="flex: 1; min-width: 200px; max-width: 250px;">
+      <div class="team-avatar">
+        <img src="Denmark.jpg" alt="Denmark Clacio" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+      </div>
+      <h4>Denmark Clacio</h4>
+      <div class="team-role">UI/UX Designer</div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- CTA Section -->
+<div class="cta-section" id="cta">
+  <h2>Handa ka na bang matuto?</h2>
+  <p>Sumali sa libu-libong Filipino na gumagamit ng Lingwahero araw-araw</p>
+  <div class="cta-buttons">
+    <a href="login-signup.html" class="btn-white">Sumali ngayon</a>
+    <a href="index.html" class="btn-transparent">Mag-explore muna</a>
+  </div>
+</div>
+
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2026 Lingwahero | Diksiyonaryong Makabayan · Pagpapanatili ng Wikang Filipino</p>
+  <p style="margin-top: 8px; font-size: 11px;">"Ang wika ay salamin ng kultura at kaluluwa ng bayan."</p>
+</footer>
+
+
+
+<script>
+  // Scroll Animation Observer
+  const observerOptions = {
+    threshold: 0.3,
+    rootMargin: '0px 0px -100px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  // Observe all animated elements
+  document.querySelectorAll('.feature-content, .feature-image, .stat-item, .testimonial-card, .team-card').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+
+  // Dark Mode
+  const darkToggle = document.getElementById('darkModeToggle');
+  function initDarkMode() {
+    if (localStorage.getItem('landingDarkMode') === 'enabled') {
+      document.body.classList.add('dark-mode');
+      darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+  }
+  darkToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('landingDarkMode', isDark ? 'enabled' : 'disabled');
+    darkToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+  });
+  initDarkMode();
+
+  // Guest mode
+  function guestMode() {
+    localStorage.removeItem('lingwahero_currentUser');
+    window.location.href = 'index.html';
+  }
+  document.getElementById('guestBtn')?.addEventListener('click', guestMode);
+  document.getElementById('ctaGuestBtn')?.addEventListener('click', guestMode);
+  document.getElementById('openLoginModal')?.addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
+  document.getElementById('ctaLoginBtn')?.addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
+
+  // Check if already logged in
+  if (localStorage.getItem('lingwahero_currentUser')) {
+    window.location.href = 'index.html';
+  }
+  
+  
+  
+</script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lingwahero · Diksiyonaryong Makabayan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ========== UNIFIED NAVBAR ========== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="Lingwahero.jpg" alt="Lingwahero Logo" class="brand-logo" id="brandLogo">
+      <!-- Add your logo here -->
+      <span class="brand-text">Lingwahero</span>
+    </a>
+<div class="nav-center">
+  <a href="index.html" class="nav-link active" data-page="home">Tahanan</a>
+  <a href="games.html" class="nav-link" data-page="games">Laro <span class="badge-new">NEW</span></a>
+  <a href="about.html" class="nav-link" data-page="about">Tungkol sa Amin</a>
+</div>
+<div class="nav-right">
+  <a href="scanner.html" class="scanner-icon-btn" title="Scanner">
+    <i class="fas fa-camera"></i>
+  </a>
+  <button class="icon-btn" id="darkModeToggle" title="Dark Mode">
+    <i class="fas fa-moon"></i>
+  </button>
+  <button class="icon-btn" id="favBtn" title="Mga Paborito">
+    <i class="fas fa-heart"></i>
+    <span class="fav-count" id="favCount">0</span>
+  </button>
+  <button class="btn-login" id="openLoginBtn">
+    <i class="fas fa-user"></i> Mag-login
+  </button>
+</div>
+    <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+  </div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Tahanan</a>
+  <a href="#" onclick="showAllWords(); return false;">Lahat ng Salita</a>
+  <a href="games.html">Laro 🎮</a>
+  <a href="about.html">Tungkol sa Amin</a>
+  <a href="scanner.html"><i class="fas fa-camera"></i> Scanner</a>
+  <a href="#" onclick="openLogin(); return false;">Mag-login</a>
+</div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-flag-strip"></div>
+    <div class="hero-eyebrow">Diksiyonaryong Makabayan</div>
+    <h1 class="hero-title">Ang Salita ng<br><span class="hero-accent">Ating Bayan</span></h1>
+    <p class="hero-sub">Tagalog · Cebuano · Ilocano · Hiligaynon · English</p>
+    <div class="hero-cta-row">
+      <button class="btn-primary" onclick="focusSearch()">
+        <i class="fas fa-search"></i> Maghanap ng Salita
+      </button>
+    </div>
+    
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><span class="hstat-num">20+</span><span class="hstat-lbl">Salita</span></div>
+    <div class="hstat-divider"></div>
+    <div class="hstat"><span class="hstat-num">5</span><span class="hstat-lbl">Wika</span></div>
+    <div class="hstat-divider"></div>
+    <div class="hstat"><span class="hstat-num">3</span><span class="hstat-lbl">Laro</span></div>
+  </div>
+</section>
+
+<!-- ========== WORD OF THE DAY ========== -->
+<section class="wotd-section" id="wotdSection">
+  <div class="container">
+    <div class="wotd-card">
+      <div class="wotd-left">
+        <div class="wotd-badge"></i> Salita ng Araw</div>
+        <div class="wotd-word" id="wotdWord">araw</div>
+        <div class="wotd-phonetic" id="wotdPhonetic">a·raw</div>
+        <div class="wotd-translation" id="wotdTranslation">day / sun</div>
+      </div>
+      <div class="wotd-right">
+        <div class="wotd-meaning" id="wotdMeaning">Ang panahon ng liwanag sa pagitan ng isang gabi at ang susunod na gabi, o ang bituin na nasa gitna ng ating solar system.</div>
+        <div class="wotd-actions">
+          <button class="wotd-btn" onclick="searchWord(document.getElementById('wotdWord').textContent)">
+            <i class="fas fa-book-open"></i> Tingnan
+          </button>
+          <button class="wotd-btn" id="wotdSpeakBtn">
+            <i class="fas fa-volume-up"></i> Pakinggan
+          </button>
+          <button class="wotd-btn wotd-fav" id="wotdFavBtn">
+            <i class="far fa-heart"></i> I-save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SEARCH ========== -->
+<section class="search-section">
+  <div class="container">
+    <div class="search-wrap">
+      <div class="search-box">
+        <i class="fas fa-search search-ico"></i>
+        <input type="text" id="searchInput" placeholder="Maghanap ng salita... hal. pag-ibig, araw, puno" autocomplete="off">
+        <button id="searchBtn" class="search-go">Hanapin</button>
+      </div>
+<div class="search-opts">
+  <button class="opt-btn" id="ttsSpeakBtn"><i class="fas fa-volume-up"></i> Pakinggan</button>
+  <label class="opt-toggle">
+    <input type="checkbox" id="slowRateCheckbox">
+    <span class="toggle-track"></span>
+    Mabagal na Bigkas
+  </label>
+  <div class="phonetic-chip"><i class="fas fa-microphone-alt"></i> <code id="phoneticDisplay">—</code></div>
+  <button class="random-word-btn" id="randomWordBtn" onclick="randomWord()">
+    <i class="fas fa-random"></i> Random Salita
+  </button>
+</div>
+    </div>
+
+    <!-- Recent -->
+    <div class="recent-bar" id="recentBar">
+      <span class="recent-label"><i class="fas fa-clock"></i> Kamakailang Hinanap:</span>
+      <div class="recent-tags" id="recentList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== RESULT ========== -->
+<section class="result-section">
+  <div class="container">
+    <div id="resultArea" class="result-area">
+      <div class="empty-state">
+        <div class="empty-icon">📖</div>
+        <p>Maghanap ng salita upang makita ang kahulugan sa limang wika</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ALL WORDS PANEL ========== -->
+<section id="allWordsSection" class="allwords-panel" style="display:none;">
+  <div class="container">
+    <div class="panel-head">
+      <h2><i class="fas fa-book"></i> Lahat ng Salita</h2>
+      <div class="panel-head-right">
+        <input type="text" id="wordsFilter" placeholder="I-filter ang mga salita..." class="filter-input">
+        <button class="close-btn" onclick="showDictionaryView()"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+    <div id="allWordsList" class="words-masonry"></div>
+  </div>
+</section>
+
+<!-- ========== FAVORITES PANEL ========== -->
+<section id="favoritesPanel" class="allwords-panel" style="display:none;">
+  <div class="container">
+    <div class="panel-head">
+      <h2><i class="fas fa-heart"></i> Mga Paboritong Salita</h2>
+      <button class="close-btn" onclick="closeFavorites()"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="favoritesList" class="words-masonry"></div>
+  </div>
+</section>
+
+<!-- ========== FEATURES ========== -->
+<section class="features-section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Mga Tampok</h2>
+      <p>Lahat ng kailangan mo para matuto at maglaro</p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card" onclick="showAllWords()">
+        <div class="feat-ico red"><i class="fas fa-book"></i></div>
+        <h3>Lahat ng Salita</h3>
+        <p>Buong koleksyon ng mga salita sa limang wika</p>
+      </div>
+      <div class="feat-card" onclick="window.location.href='games.html'">
+        <div class="feat-ico blue"><i class="fas fa-gamepad"></i></div>
+        <h3>Mga Laro</h3>
+        <p>Subukan ang iyong kaalaman sa aming mga laro</p>
+      </div>
+      <div class="feat-card" onclick="toggleFavorites()">
+        <div class="feat-ico yellow"><i class="fas fa-heart"></i></div>
+        <h3>Mga Paborito</h3>
+        <p>I-save ang iyong mga paboritong salita</p>
+      </div>
+      <div class="feat-card" id="ttsFeature">
+        <div class="feat-ico red"><i class="fas fa-headphones"></i></div>
+        <h3>Text-to-Speech</h3>
+        <p>Pakinggan ang tamang pagbigkas ng salita</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GAMES PREVIEW -->
+<section class="games-preview-section">
+  <div class="container">
+    <div class="section-head light">
+      <h2>Maglaro at Matuto</h2>
+      <p>Palakasin ang iyong kaalaman sa wikang Filipino</p>
+    </div>
+    <div class="games-preview-grid">
+      <a href="games.html?game=language" class="game-prev-card">
+        <div class="gprev-icon" style="font-size:0;margin-bottom:14px;">
+          <i class="fas fa-brain" style="font-size:40px;color:rgba(255,255,255,0.85);"></i>
+        </div>
+        <h3>Language Quiz</h3>
+        <p>Subukan ang iyong kaalaman sa iba't ibang wika</p>
+        <span class="gprev-tag">8 Tanong</span>
+      </a>
+      <a href="games.html?game=baybayin" class="game-prev-card featured">
+        <div class="gprev-icon baybayin-emoji">ᜊᜌ᜔</div>
+        <h3>Alamin ang Baybayin</h3>
+        <p>Kilalanin ang sinaunang sulat ng mga Pilipino</p>
+        <span class="gprev-tag">9 Tanong</span>
+      </a>
+      <a href="games.html?game=wordguess" class="game-prev-card">
+        <div class="gprev-icon" style="font-size:0;margin-bottom:14px;">
+          <i class="fas fa-font" style="font-size:40px;color:rgba(255,255,255,0.85);"></i>
+        </div>
+        <h3>Hulaan ang Salita</h3>
+        <p>Hulaan ang salita base sa kahulugan nito</p>
+        <span class="gprev-tag">Bago</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="brand-sun">☀</div>
+      <span>Lingwahero</span>
+      <p>Diksiyonaryong Makabayan</p>
+    </div>
+    <div class="footer-nav">
+      <h4>Mga Pahina</h4>
+      <a href="index.html">Tahanan</a>
+      <a href="#" onclick="showAllWords(); return false;">Lahat ng Salita</a>
+      <a href="games.html">Mga Laro</a>
+      <a href="about.html">Tungkol sa Amin</a>
+    </div>
+    <div class="footer-nav">
+      <h4>Mga Laro</h4>
+      <a href="games.html?game=language">Language Quiz</a>
+      <a href="games.html?game=baybayin">Baybayin Quiz</a>
+      <a href="games.html?game=wordguess">Hulaan ang Salita</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Makipag-ugnayan</h4>
+      <p><i class="fab fa-facebook"></i> @Lingwahero</p>
+      <p><i class="fab fa-github"></i> /lingwahero</p>
+      <p><i class="fas fa-envelope"></i> lingwahero@gmail.com</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p> © 2026 Lingwahero | Pagpapanatili ng Wikang Filipino</p>
+    <p class="footer-quote">"Ang wika ay salamin ng kultura at kaluluwa ng bayan."</p>
+  </div>
+</footer>
+
+<!-- ========== LOGIN MODAL ========== -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    <div class="modal-tabs">
+      <button class="mtab active" id="loginTab" onclick="switchTab('login')">Mag-login</button>
+      <button class="mtab" id="signupTab" onclick="switchTab('signup')">Mag-sign up</button>
+    </div>
+    <!-- Login Form -->
+    <div id="loginForm">
+      <div class="modal-header">
+        <div class="modal-logo">☀</div>
+        <h2>Maligayang Pagbabalik!</h2>
+        <p>Mag-login sa iyong account</p>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <div class="input-wrap"><i class="fas fa-envelope"></i>
+          <input type="email" id="loginEmail" placeholder="ikaw@email.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrap"><i class="fas fa-lock"></i>
+          <input type="password" id="loginPassword" placeholder="••••••••">
+        </div>
+      </div>
+      <div id="loginError" class="form-error"></div>
+      <button class="btn-form" onclick="doLogin()">Mag-login <i class="fas fa-arrow-right"></i></button>
+      <p class="form-switch">Wala pang account? <a onclick="switchTab('signup')">Mag-sign up</a></p>
+    </div>
+    <!-- Signup Form -->
+    <div id="signupForm" style="display:none;">
+      <div class="modal-header">
+        <div class="modal-logo">☀</div>
+        <h2>Sumali sa Amin!</h2>
+        <p>Gumawa ng bagong account</p>
+      </div>
+      <div class="form-group">
+        <label>Pangalan</label>
+        <div class="input-wrap"><i class="fas fa-user"></i>
+          <input type="text" id="signupName" placeholder="Iyong pangalan">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <div class="input-wrap"><i class="fas fa-envelope"></i>
+          <input type="email" id="signupEmail" placeholder="ikaw@email.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrap"><i class="fas fa-lock"></i>
+          <input type="password" id="signupPassword" placeholder="••••••••">
+        </div>
+      </div>
+      <div id="signupError" class="form-error"></div>
+      <button class="btn-form" onclick="doSignup()">Gumawa ng Account <i class="fas fa-arrow-right"></i></button>
+      <p class="form-switch">May account na? <a onclick="switchTab('login')">Mag-login</a></p>
+    </div>
+    <!-- Logged In State -->
+    <div id="loggedInView" style="display:none;">
+      <div class="modal-header">
+        <div class="modal-logo">👋</div>
+        <h2>Kamusta, <span id="userDisplayName"></span>!</h2>
+        <p>Ikaw ay naka-login na</p>
+      </div>
+      <div class="user-stats">
+        <div class="ustat"><span id="uFavCount">0</span><label>Mga Paborito</label></div>
+        <div class="ustat"><span id="uSearchCount">0</span><label>Mga Hinanap</label></div>
+      </div>
+      <button class="btn-form btn-danger" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Mag-logout</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
