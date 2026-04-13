@@ -13,7 +13,6 @@
       margin: 40px auto;
       padding: 0 20px;
     }
-
     .profile-header {
       background: linear-gradient(135deg, var(--blue), var(--blue-dark));
       border-radius: 24px;
@@ -21,7 +20,6 @@
       text-align: center;
       margin-bottom: 32px;
     }
-
     .profile-avatar {
       width: 100px;
       height: 100px;
@@ -32,30 +30,25 @@
       justify-content: center;
       margin: 0 auto 20px;
     }
-
     .profile-avatar i {
       font-size: 48px;
       color: var(--blue-dark);
     }
-
     .profile-header h1 {
       font-family: var(--font-display);
       font-size: 28px;
       color: white;
       margin-bottom: 8px;
     }
-
     .profile-header p {
       color: rgba(255, 255, 255, 0.7);
     }
-
     .profile-stats {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
       margin-bottom: 32px;
     }
-
     .stat-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -63,20 +56,17 @@
       padding: 20px;
       text-align: center;
     }
-
     .stat-number {
       font-family: var(--font-display);
       font-size: 32px;
       font-weight: 900;
       color: var(--red);
     }
-
     .stat-label {
       font-size: 11px;
       color: var(--text-gray);
       margin-top: 8px;
     }
-
     .profile-section {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -84,7 +74,6 @@
       padding: 24px;
       margin-bottom: 24px;
     }
-
     .profile-section h3 {
       font-size: 18px;
       margin-bottom: 16px;
@@ -93,11 +82,9 @@
       gap: 10px;
       color: var(--text);
     }
-
     .profile-list {
       list-style: none;
     }
-
     .profile-list li {
       padding: 12px 0;
       border-bottom: 1px solid var(--border);
@@ -107,19 +94,12 @@
       justify-content: space-between;
       color: var(--text);
     }
-
     .profile-list li:last-child {
       border-bottom: none;
     }
-
     .profile-list li:hover {
       color: var(--blue);
     }
-
-    .profile-list li i {
-      color: var(--text-gray);
-    }
-
     .btn-logout {
       width: 100%;
       background: var(--red);
@@ -132,18 +112,15 @@
       margin-top: 16px;
       transition: all 0.2s;
     }
-
     .btn-logout:hover {
       background: var(--red-dark);
       transform: translateY(-2px);
     }
-
     .empty-state {
       text-align: center;
       padding: 32px;
       color: var(--text-gray);
     }
-
     @media (max-width: 768px) {
       .profile-stats {
         grid-template-columns: repeat(2, 1fr);
@@ -153,12 +130,11 @@
 </head>
 <body>
 
-<!-- ========== UNIFIED NAVBAR ========== -->
 <nav class="navbar" id="navbar">
   <div class="nav-inner">
     <a href="index.html" class="nav-brand">
       <div class="brand-sun">☀</div>
-      <img src="lingwahero_l.jpg" alt="Lingwahero" class="brand-logo" id="brandLogo" style="height: 32px; width: auto;">
+      <img src="lingwahero_l.jpg" alt="Lingwahero" class="brand-logo" style="height: 32px; width: auto;">
       <span class="brand-text">Lingwahero</span>
     </a>
     <div class="nav-center">
@@ -186,7 +162,6 @@
   </div>
 </nav>
 
-<!-- MAIN CONTENT -->
 <div class="main-content" style="margin-left: 0; padding: 32px;">
   <div class="profile-container">
     <div class="profile-header">
@@ -236,7 +211,6 @@
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand">
@@ -269,11 +243,14 @@
   </div>
 </footer>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+<script src="firebase-config.js"></script>
+
 <script>
-  // Get user data from localStorage
-  function getUser() {
-    return JSON.parse(localStorage.getItem('lingwahero_currentUser'));
-  }
+  let currentUser = null;
 
   function getFavorites() {
     return JSON.parse(localStorage.getItem('pd_favorites') || '[]');
@@ -288,12 +265,13 @@
   }
 
   function updateProfile() {
-    const user = getUser();
+    const user = JSON.parse(localStorage.getItem('lingwahero_currentUser'));
     if (!user) {
       window.location.href = 'login-signup.html';
       return;
     }
 
+    currentUser = user;
     document.getElementById('userName').textContent = user.name;
     document.getElementById('userEmail').textContent = user.email;
 
@@ -307,7 +285,6 @@
     document.getElementById('statGames').textContent = stats.gamesPlayed;
     document.getElementById('statScore').textContent = stats.totalScore;
 
-    // Render favorites list
     const favContainer = document.getElementById('favoritesList');
     if (favorites.length === 0) {
       favContainer.innerHTML = '<div class="empty-state">Walang paboritong salita</div>';
@@ -320,7 +297,6 @@
       `).join('');
     }
 
-    // Render recent searches list
     const recentContainer = document.getElementById('recentList');
     if (searches.length === 0) {
       recentContainer.innerHTML = '<div class="empty-state">Walang kamakailang hinanap</div>';
@@ -334,13 +310,19 @@
     }
   }
 
-  function searchWord(word) {
+  window.searchWord = function(word) {
     window.location.href = `index.html?search=${encodeURIComponent(word)}`;
-  }
+  };
 
-  function logout() {
-    localStorage.removeItem('lingwahero_currentUser');
-    window.location.href = 'login-signup.html';
+  async function logout() {
+    try {
+      await auth.signOut();
+      localStorage.removeItem('lingwahero_currentUser');
+      window.location.href = 'login-signup.html';
+    } catch (error) {
+      console.error('Logout error:', error);
+      window.location.href = 'login-signup.html';
+    }
   }
 
   document.getElementById('logoutBtn').addEventListener('click', logout);
@@ -368,7 +350,19 @@
     hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
   }
 
+  // Check auth state
+  auth.onAuthStateChanged((user) => {
+    if (!user && !window.location.pathname.includes('login-signup.html')) {
+      window.location.href = 'login-signup.html';
+    }
+  });
+
   updateProfile();
 </script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+<script src="firebase-config.js"></script>
 </body>
 </html>

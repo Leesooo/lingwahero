@@ -1,13 +1,12 @@
 // firebase-config.js
-// Replace these with your actual Firebase config after creating your project
-
+// REPLACE THIS with your actual Firebase config from Step 2.2
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY_HERE",
-  authDomain: "YOUR_AUTH_DOMAIN_HERE",
-  projectId: "YOUR_PROJECT_ID_HERE",
-  storageBucket: "YOUR_STORAGE_BUCKET_HERE",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID_HERE",
-  appId: "YOUR_APP_ID_HERE"
+  apiKey: "AIzaSyCBl_FnVG8kHfIjuIBqSAd5krN1K_i-i00",
+  authDomain: "lingwahero.firebaseapp.com",
+  projectId: "lingwahero",
+  storageBucket: "lingwahero.firebasestorage.app",
+  messagingSenderId: "863528945284",
+  appId: "1:863528945284:web:b1b068793d1b03666624d1"
 };
 
 // Initialize Firebase
